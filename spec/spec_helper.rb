@@ -26,3 +26,8 @@ class MockTweet
 end
 
 
+class MockTweetWithHttpVineUrl
+  def url;"https://twitter.com/DesliParra/status/407413145792413696";end
+  def urls;[{display_url:"vine.co/v/hF7WOEl76T1", expanded_url:"http://vine.co/v/hF7WOEl76T1"}];end  
+end
+

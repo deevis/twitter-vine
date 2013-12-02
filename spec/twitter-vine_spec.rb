@@ -27,4 +27,17 @@ describe TwitterVine do
     vine_map[:vine_src].should_not be nil
     vine_map[:vine_type].should_not be nil
   end
+
+  it "should be able to scrape Vine metadata when expanded_url is http instead of https" do
+    vine_map = TwitterVine.build_vine_map(MockTweetWithHttpVineUrl.new)
+    puts vine_map
+    vine_map[:vine_id].should_not be nil
+    vine_map[:vine_url].should_not be nil
+    vine_map[:vine_author_thumbnail].should_not be nil
+    vine_map[:vine_author].should_not be nil
+    vine_map[:vine_description].should_not be nil
+    vine_map[:vine_src].should_not be nil
+    vine_map[:vine_type].should_not be nil
+  end
+
 end

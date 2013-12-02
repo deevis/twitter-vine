@@ -29,6 +29,7 @@ module TwitterVine
           u[:expanded_url].to_s
         end
     end.compact.first
+    vine_url.gsub!("http://", "https://")
     puts "Got vine_url [#{vine_url}]" if DEBUG
     doc = Nokogiri::HTML(open(vine_url))
     {
