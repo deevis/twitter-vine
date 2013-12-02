@@ -20,9 +20,9 @@ Gem::Specification.new do |s|
 
   # Gem dependencies
   #
-  s.add_runtime_dependency('twitter', '~>5.0.0')
-  s.add_runtime_dependency('nokogiri', '>= 1.4.0')
+  s.add_runtime_dependency('twitter', '~>5.1.1')
+  s.add_runtime_dependency('nokogiri', '>= 1.6.0')
 
   # Specs
-  s.add_development_dependency('rspec', '>= 2.7.0')
+  s.add_development_dependency('rspec', '>= 2.14.1')
 end

@@ -24,7 +24,7 @@ module TwitterVine
       opts[:include_entities] = true
       opts[:lang] ||= "en"
       opts[:count] ||= 10
-      vine_criteria = "\"vine.co/v/\" #{q}"
+      vine_criteria = "\"vine.co/v/\" #{q} -RT"
       puts "Using search criteria [#{vine_criteria}]" if DEBUG
       _normalize(tc.search(vine_criteria, opts))
     end
@@ -41,16 +41,15 @@ module TwitterVine
           doc = Nokogiri::HTML(open(vine_url))
           {
             time: r.created_at,
-            # This is Vine-centric - leaving out the other parts of the tweet...
-            # id: r.id,
-            # url: r.url.to_s,
-            # author_id: r.user.id,
-            # author: r.user.name,
-            # screenname: r.user.screen_name,
-            # author_thumbnail: r.user.profile_image_url.to_s.gsub("normal","bigger"),
-            # text: r.text, 
-            # friends_count: r.user.friends_count,
-            # followers_count: r.user.followers_count,
+            id: r.id,
+            url: r.url.to_s,
+            author_id: r.user.id,
+            author: r.user.name,
+            screenname: r.user.screen_name,
+            author_thumbnail: r.user.profile_image_url.to_s.gsub("normal","bigger"),
+            text: r.text, 
+            friends_count: r.user.friends_count,
+            followers_count: r.user.followers_count,
             # media: r.media.map{|m| m.media_uri.to_s},
             vine_url: vine_url,
             vine_author_thumbnail: doc.css(".avatar-container img").first[:src],
