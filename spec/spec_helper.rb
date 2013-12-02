@@ -16,7 +16,7 @@ end
 TwitterVine.setup do |c|
   c.api_key = ENV["BT_TWITTER_API_KEY"]
   c.api_secret = ENV["BT_TWITTER_API_SECRET"]
-  c.oauth_key = ENV["BT_TWITTER_OAUTH_TOKEN"]
+  c.oauth_token = ENV["BT_TWITTER_OAUTH_TOKEN"]
   c.oauth_secret = ENV["BT_TWITTER_OAUTH_TOKEN_SECRET"]
 end
 

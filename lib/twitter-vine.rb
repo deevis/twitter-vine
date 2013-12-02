@@ -10,8 +10,8 @@ module TwitterVine
     def self.api_secret; @@api_secret; end
     def self.api_secret=(val); @@api_secret=val; end
 
-    def self.oauth_key; @@oauth_key; end
-    def self.oauth_key=(val); @@oauth_key=val; end
+    def self.oauth_token; @@oauth_token; end
+    def self.oauth_token=(val); @@oauth_token=val; end
 
     def self.oauth_secret; @@oauth_secret; end
     def self.oauth_secret=(val); @@oauth_secret=val; end

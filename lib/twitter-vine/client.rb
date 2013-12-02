@@ -18,7 +18,7 @@ module TwitterVine
       tc = ::Twitter::REST::Client.new do |config|
         config.consumer_key        = opts.delete(:api_key) || TwitterVine.api_key
         config.consumer_secret     = opts.delete(:api_secret) || TwitterVine.api_secret
-        config.access_token        = opts.delete(:oauth_tokn) || TwitterVine.oauth_key
+        config.access_token        = opts.delete(:oauth_token) || TwitterVine.oauth_token
         config.access_token_secret = opts.delete(:oauth_secret) || TwitterVine.oauth_secret
       end
       opts[:include_entities] = true
