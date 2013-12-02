@@ -14,7 +14,13 @@ A ruby based API to get information about Vines and allow searching.
 ## Usage
 
 ```ruby
-TwitterVine.setup do |config|
+  # Simplest use case - give the link of a Vine
+  parts = TwitterVine.parse("https://vine.co/v/b2BPEL0Orbm")
+  
+```
+
+```ruby
+TwitterVine::Client.setup do |config|
   config.api_key        = "YOUR_API_KEY"
   config.api_secret     = "YOUR_API_SECRET"
   config.oauth_token    = "YOUR_OAUTH_TOKEN"
@@ -25,3 +31,4 @@ end
 ```ruby
 vines = TwitterVine::Client.search("Prank")
 ```
+

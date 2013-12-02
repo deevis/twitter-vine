@@ -1,11 +1,15 @@
 require 'spec_helper'
 require 'twitter-vine'
+require 'twitter-vine/client'
 
-TwitterVine::Client::DEBUG=true
+TwitterVine::DEBUG=true
 
 describe TwitterVine do
+  include_context "vine results"
+
   it "should be valid" do
     TwitterVine.should be_a(Module)
+    TwitterVine::Client.should be_a(Module)
   end
 
   # Commented out until I set environment variables out on travis-ci
@@ -16,28 +20,29 @@ describe TwitterVine do
   #   expect(l.size).to be > 0 
   # end
 
-  it "should be able to scrape Vine metadata" do
-    vine_map = TwitterVine.build_vine_map(MockTweet.new)
-    puts vine_map
-    vine_map[:vine_id].should_not be nil
-    vine_map[:vine_url].should_not be nil
-    vine_map[:vine_author_thumbnail].should_not be nil
-    vine_map[:vine_author].should_not be nil
-    vine_map[:vine_description].should_not be nil
-    vine_map[:vine_src].should_not be nil
-    vine_map[:vine_type].should_not be nil
+  it "should be able to scrape Vine metadata from a Twitter API result" do
+    expect_results(TwitterVine::Client.send :build_vine_map, MockTweet.new)
   end
 
-  it "should be able to scrape Vine metadata when expanded_url is http instead of https" do
-    vine_map = TwitterVine.build_vine_map(MockTweetWithHttpVineUrl.new)
-    puts vine_map
-    vine_map[:vine_id].should_not be nil
-    vine_map[:vine_url].should_not be nil
-    vine_map[:vine_author_thumbnail].should_not be nil
-    vine_map[:vine_author].should_not be nil
-    vine_map[:vine_description].should_not be nil
-    vine_map[:vine_src].should_not be nil
-    vine_map[:vine_type].should_not be nil
+  it "should be able to scrape Vine metadata from a Twitter API result even if expanded_url is http instead of https" do
+    expect_results(TwitterVine::Client.send :build_vine_map, MockTweetWithHttpVineUrl.new)
   end
+
+  it "can parse a direct vine url" do
+    expect_results(TwitterVine.parse("https://vine.co/v/b2BPEL0Orbm"))
+  end
+
+  it "can parse a direct vine url that is mistakenly http" do
+    expect_results(TwitterVine.parse("http://vine.co/v/b2BPEL0Orbm"))
+  end
+
+  it "can parse an accidental embed/simple vine url" do
+    expect_results(TwitterVine.parse("https://vine.co/v/b2BPEL0Orbm/embed/simple"))
+  end
+
+  it "can parse an accidental embed/simple vine url that is double mistaken with http" do
+    expect_results(TwitterVine.parse("http://vine.co/v/b2BPEL0Orbm/embed/simple"))
+  end
+
 
 end
