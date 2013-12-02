@@ -2,7 +2,6 @@ require 'open-uri'
 
 module TwitterVine
   module Client
-    DEBUG = false
 
     #
     # OPTIONS:
@@ -25,20 +24,16 @@ module TwitterVine
       opts[:lang] ||= "en"
       opts[:count] ||= 10
       vine_criteria = "\"vine.co/v/\" #{q} -RT"
-      puts "Using search criteria [#{vine_criteria}]" if DEBUG
+      puts "Using search criteria [#{vine_criteria}]" if TwitterVine::DEBUG
       _normalize(tc.search(vine_criteria, opts))
     end
+
 
     private
       # Does the processing inplace...
       def self._normalize(results) 
         results.entries.map do |r|
-          vine_url = r.urls.map do |u| 
-            if u[:display_url] =~ /vine\.co\/v/
-              u[:expanded_url].to_s
-            end
-          end.compact.first
-          doc = Nokogiri::HTML(open(vine_url))
+          vine_map = TwitterVine.build_vine_map(r)
           {
             time: r.created_at,
             id: r.id,
@@ -51,14 +46,8 @@ module TwitterVine
             friends_count: r.user.friends_count,
             followers_count: r.user.followers_count,
             # media: r.media.map{|m| m.media_uri.to_s},
-            vine_url: vine_url,
-            vine_author_thumbnail: doc.css(".avatar-container img").first[:src],
-            vine_author: doc.css("p.username").text,
-            vine_description: doc.css("p.description").text.gsub(/\s+/," ").strip,
-            vine_src: doc.css("video source").first[:src],
-            vine_type: doc.css("video source").first[:type]
-          }
-        end 
+          }.merge(vine_map)
+        end.compact 
       end
 
   end

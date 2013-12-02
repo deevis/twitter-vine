@@ -20,3 +20,9 @@ TwitterVine.setup do |c|
   c.oauth_secret = ENV["BT_TWITTER_OAUTH_TOKEN_SECRET"]
 end
 
+class MockTweet
+  def url;"https://twitter.com/DesliParra/status/407413145792413696";end
+  def urls;[{display_url:"vine.co/v/hF7WOEl76T1", expanded_url:"https://vine.co/v/hF7WOEl76T1"}];end  
+end
+
+

@@ -16,4 +16,15 @@ describe TwitterVine do
   #   expect(l.size).to be > 0 
   # end
 
+  it "should be able to scrape Vine metadata" do
+    vine_map = TwitterVine.build_vine_map(MockTweet.new)
+    puts vine_map
+    vine_map[:vine_id].should_not be nil
+    vine_map[:vine_url].should_not be nil
+    vine_map[:vine_author_thumbnail].should_not be nil
+    vine_map[:vine_author].should_not be nil
+    vine_map[:vine_description].should_not be nil
+    vine_map[:vine_src].should_not be nil
+    vine_map[:vine_type].should_not be nil
+  end
 end
