@@ -48,33 +48,37 @@ module TwitterVine
     private
       # Does the processing inplace...
       def self._normalize(results) 
-        results.entries.map do |r|
+        results.to_h[:statuses].map do |r|
+          puts r
           vine_map = build_vine_map(r)
+          #puts "...mapping...#{r[:entities][:media]}"
           {
-            time: r.created_at,
-            id: r.id,
-            url: r.url.to_s,
-            author_id: r.user.id,
-            author: r.user.name,
-            screenname: r.user.screen_name,
-            author_thumbnail: r.user.profile_image_url.to_s.gsub("normal","bigger"),
-            text: r.text, 
-            friends_count: r.user.friends_count,
-            followers_count: r.user.followers_count,
-            # media: r.media.map{|m| m.media_uri.to_s},
+            time: (Time.parse(r[:created_at]) rescue Time.now),
+            id: r[:id],
+            url: "https://twitter.com/#{r[:user][:screen_name]}/status/#{r[:id]}",
+            author_id: r[:user][:id],
+            author: r[:user][:name],
+            screenname: r[:user][:screen_name],
+            author_thumbnail: r[:user][:profile_image_url].gsub("normal","bigger"),
+            bg_color: r[:user][:profile_background_color],
+            text_color: r[:user][:profile_text_color],
+            text: r[:text], 
+            friends_count: r[:user][:friends_count],
+            followers_count: r[:user][:followers_count],
+            #media: r.media.map{|m| m.media_uri.to_s}
+            #media: (r[:entities][:media].map{|m| m[:media_url]} rescue [])
           }.merge(vine_map)
-        end.compact 
+        end.compact
       end
 
       def self.build_vine_map(twitter_result)
-        vine_url = twitter_result.urls.map do |u| 
+        vine_url = twitter_result[:entities][:urls].map do |u| 
             if u[:display_url] =~ /vine\.co\/v/
               u[:expanded_url].to_s
             end
         end.compact.first
         TwitterVine.parse(vine_url)
       end
-
 
   end
 end

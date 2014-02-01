@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
 
   # Gem dependencies
   #
-  s.add_runtime_dependency('twitter', '>=5.5.1')
+  s.add_runtime_dependency('twitter', '~>5.1.1')
+  s.add_runtime_dependency('faraday', '~>0.8.9')
   s.add_runtime_dependency('nokogiri', '>= 1.6.0')
 
   # Specs

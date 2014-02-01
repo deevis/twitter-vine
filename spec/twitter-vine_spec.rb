@@ -16,16 +16,18 @@ describe TwitterVine do
   #
   # it "should return results" do 
   #   l = TwitterVine::Client.search("Prank")
+  #   puts "-------------------------------------------"
   #   puts l
+  #   puts "-------------------------------------------"
   #   expect(l.size).to be > 0 
   # end
 
   it "should be able to scrape Vine metadata from a Twitter API result" do
-    expect_results(TwitterVine::Client.send :build_vine_map, MockTweet.new)
+    expect_results(TwitterVine::Client.send :build_vine_map, MockTweet.normal)
   end
 
   it "should be able to scrape Vine metadata from a Twitter API result even if expanded_url is http instead of https" do
-    expect_results(TwitterVine::Client.send :build_vine_map, MockTweetWithHttpVineUrl.new)
+    expect_results(TwitterVine::Client.send :build_vine_map, MockTweet.withHttpVineUrl)
   end
 
   it "can parse a direct vine url" do
