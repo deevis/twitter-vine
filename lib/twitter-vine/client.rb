@@ -55,6 +55,7 @@ module TwitterVine
           next unless vine_map
           #puts "...mapping...#{r[:entities][:media]}"
           {
+            vine_hashtags: r[:entities][:hashtags].map{|tag_hash| tag_hash[:text]},
             time: (Time.parse(r[:created_at]) rescue Time.now),
             id: r[:id],
             url: "https://twitter.com/#{r[:user][:screen_name]}/status/#{r[:id]}",
