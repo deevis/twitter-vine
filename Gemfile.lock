@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    twitter-vine (0.1.8)
+    twitter-vine (0.1.9)
       faraday
       nokogiri
       twitter (> 5.13.0)
