@@ -1,6 +1,7 @@
 require 'twitter-vine/version'
 require 'twitter'
 require 'nokogiri'
+require 'twitter-vine/client'
 
 module TwitterVine
   DEBUG = false
