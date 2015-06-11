@@ -25,7 +25,7 @@ module TwitterVine
     #           :api_key      (required)
     #           :api_secret   (required)
     #           :oauth_token  (required)
-    #           :oauth_secret (required) 
+    #           :oauth_secret (required)
     #           :count        (optional - default: 10)
     #           :lang         (optional - default: "en")
     #
@@ -47,10 +47,12 @@ module TwitterVine
 
     private
       # Does the processing inplace...
-      def self._normalize(results) 
+      def self._normalize(results)
         results.to_h[:statuses].map do |r|
           puts r
           vine_map = build_vine_map(r)
+
+          next unless vine_map
           #puts "...mapping...#{r[:entities][:media]}"
           {
             time: (Time.parse(r[:created_at]) rescue Time.now),
@@ -62,7 +64,7 @@ module TwitterVine
             author_thumbnail: r[:user][:profile_image_url].gsub("normal","bigger"),
             bg_color: r[:user][:profile_background_color],
             text_color: r[:user][:profile_text_color],
-            text: r[:text], 
+            text: r[:text],
             friends_count: r[:user][:friends_count],
             followers_count: r[:user][:followers_count],
             #media: r.media.map{|m| m.media_uri.to_s}
@@ -72,7 +74,7 @@ module TwitterVine
       end
 
       def self.build_vine_map(twitter_result)
-        vine_url = twitter_result[:entities][:urls].map do |u| 
+        vine_url = twitter_result[:entities][:urls].map do |u|
             if u[:display_url] =~ /vine\.co\/v/
               u[:expanded_url].to_s
             end
@@ -82,4 +84,3 @@ module TwitterVine
 
   end
 end
-

@@ -1,6 +1,7 @@
 require 'twitter-vine/version'
 require 'twitter'
 require 'nokogiri'
+require 'twitter-vine/client'
 
 module TwitterVine
   DEBUG = false
@@ -9,7 +10,11 @@ module TwitterVine
     vine_url.gsub!("http://", "https://")
     vine_url.gsub!("/embed/simple", "")
     puts "Got vine_url [#{vine_url}]" if DEBUG
-    doc = Nokogiri::HTML(open(vine_url))
+    begin
+      doc = Nokogiri::HTML(open(vine_url))
+    rescue OpenURI::HTTPError
+      return nil
+    end
     {
         vine_id: vine_url.match(/.*\/(.*)/)[1],
         vine_url: vine_url,
