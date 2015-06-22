@@ -55,16 +55,17 @@ module TwitterVine
           next unless vine_map
           #puts "...mapping...#{r[:entities][:media]}"
           {
+            tweet_hashtags: r[:entities][:hashtags].map{|tag_hash| tag_hash[:text]},
             time: (Time.parse(r[:created_at]) rescue Time.now),
             id: r[:id],
             url: "https://twitter.com/#{r[:user][:screen_name]}/status/#{r[:id]}",
-            author_id: r[:user][:id],
-            author: r[:user][:name],
+            tweet_author_id: r[:user][:id],
+            tweet_author: r[:user][:name],
             screenname: r[:user][:screen_name],
             author_thumbnail: r[:user][:profile_image_url].gsub("normal","bigger"),
             bg_color: r[:user][:profile_background_color],
             text_color: r[:user][:profile_text_color],
-            text: r[:text],
+            tweet_text: r[:text],
             friends_count: r[:user][:friends_count],
             followers_count: r[:user][:followers_count],
             #media: r.media.map{|m| m.media_uri.to_s}
